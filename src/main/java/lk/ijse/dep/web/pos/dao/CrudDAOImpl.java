@@ -21,6 +21,10 @@ public abstract class CrudDAOImpl<T extends SuperEntity, PK extends Serializable
         this.em = em;
     }
 
+    protected EntityManager getEntityManager(){
+        return em;
+    }
+
     @Override
     public void save(T entity) throws Exception {
         em.persist(entity);
