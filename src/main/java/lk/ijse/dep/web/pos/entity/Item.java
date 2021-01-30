@@ -16,7 +16,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @Entity
 @Table(name = "item")
-public class Item implements Serializable {
+public class Item implements SuperEntity {
     @Id
     private String code;
     private String description;

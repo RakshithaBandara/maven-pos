@@ -14,7 +14,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Entity
 @Table(name = "customer")
-public class Customer implements Serializable {
+public class Customer implements SuperEntity {
     @Id
     private String id;
     private String name;

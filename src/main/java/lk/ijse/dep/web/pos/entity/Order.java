@@ -12,7 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "`order`")
-public class Order implements Serializable {
+public class Order implements SuperEntity {
     @Id
     private String id;
     private Date date;

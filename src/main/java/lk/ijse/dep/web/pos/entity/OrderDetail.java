@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @Entity
 @Table(name = "order_detail")
-public class OrderDetail implements Serializable {
+public class OrderDetail implements SuperEntity {
     @EmbeddedId
     private OrderDetailPK orderDetailPK;
     private int qty;
