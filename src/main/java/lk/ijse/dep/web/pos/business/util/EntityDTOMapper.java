@@ -7,18 +7,28 @@ import lk.ijse.dep.web.pos.entity.Customer;
 import lk.ijse.dep.web.pos.entity.Item;
 import lk.ijse.dep.web.pos.entity.Student;
 import org.mapstruct.*;
+import org.mapstruct.factory.Mappers;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Target;
+import java.util.List;
 
 @Mapper
 public interface EntityDTOMapper {
 
+    EntityDTOMapper instance = Mappers.getMapper(EntityDTOMapper.class);
+
+//    default EntityDTOMapper getInstance(){
+//        return Mappers.getMapper(EntityDTOMapper.class);
+//    }
+
     Customer getCustomer(CustomerDTO dto);
 
-    Item getItem(ItemDTO dto);
-
     CustomerDTO getCustomerDTO(Customer customer);
+
+    List<CustomerDTO> getCustomerDTOs(List<Customer> customers);
+
+    Item getItem(ItemDTO dto);
 
     ItemDTO getItemDTO(Item item);
 

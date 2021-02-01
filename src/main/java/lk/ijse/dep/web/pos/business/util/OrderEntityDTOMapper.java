@@ -13,12 +13,15 @@ import lk.ijse.dep.web.pos.util.JPAUtil;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
+import org.mapstruct.factory.Mappers;
 
 import javax.persistence.EntityManager;
 import java.sql.Date;
 
 @Mapper
 public interface OrderEntityDTOMapper {
+
+    OrderEntityDTOMapper instance = Mappers.getMapper(OrderEntityDTOMapper.class);
 
     @Mapping(source = "orderId", target = "id")
     @Mapping(source = ".", target = "date")
