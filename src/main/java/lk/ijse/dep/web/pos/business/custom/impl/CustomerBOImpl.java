@@ -6,19 +6,17 @@ import lk.ijse.dep.web.pos.dao.DAOFactory;
 import lk.ijse.dep.web.pos.dao.DAOTypes;
 import lk.ijse.dep.web.pos.dao.custom.CustomerDAO;
 import lk.ijse.dep.web.pos.dto.CustomerDTO;
-import lk.ijse.dep.web.pos.entity.Customer;
-import org.mapstruct.factory.Mappers;
 
 import javax.persistence.EntityManager;
 import java.util.List;
 
 public class CustomerBOImpl implements CustomerBO {
 
-    private CustomerDAO customerDAO;
+    private final CustomerDAO customerDAO;
     private EntityManager em;
-    private EntityDTOMapper mapper = EntityDTOMapper.instance;
+    private final EntityDTOMapper mapper = EntityDTOMapper.instance;
 
-    public CustomerBOImpl(){
+    public CustomerBOImpl() {
         customerDAO = DAOFactory.getInstance().getDAO(DAOTypes.CUSTOMER);
     }
 
@@ -34,7 +32,7 @@ public class CustomerBOImpl implements CustomerBO {
             em.getTransaction().begin();
             customerDAO.save(mapper.getCustomer(dto));
             em.getTransaction().commit();
-        }catch (Throwable t){
+        } catch (Throwable t) {
             em.getTransaction().rollback();
             throw t;
         }
@@ -46,7 +44,7 @@ public class CustomerBOImpl implements CustomerBO {
             em.getTransaction().begin();
             customerDAO.update(mapper.getCustomer(dto));
             em.getTransaction().commit();
-        }catch (Throwable t){
+        } catch (Throwable t) {
             em.getTransaction().rollback();
             throw t;
         }
@@ -58,7 +56,7 @@ public class CustomerBOImpl implements CustomerBO {
             em.getTransaction().begin();
             customerDAO.delete(customerId);
             em.getTransaction().commit();
-        }catch (Throwable t){
+        } catch (Throwable t) {
             em.getTransaction().rollback();
             throw t;
         }
@@ -71,8 +69,9 @@ public class CustomerBOImpl implements CustomerBO {
             List<CustomerDTO> customerDTOs = mapper.getCustomerDTOs(customerDAO.getAll());
             em.getTransaction().commit();
             return customerDTOs;
-        }catch (Throwable t){
+        } catch (Throwable t) {
             em.getTransaction().rollback();
             throw t;
         }
+    }
 }

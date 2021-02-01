@@ -32,6 +32,8 @@ public interface EntityDTOMapper {
 
     ItemDTO getItemDTO(Item item);
 
+    List<ItemDTO> getItemDTOs(List<Item> item);
+
 //    Order getOrder(OrderDTO dto);
 
     @Mapping(source = "id", target = "studentId")
