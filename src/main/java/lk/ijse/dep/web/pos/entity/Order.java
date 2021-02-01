@@ -5,6 +5,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -21,7 +22,7 @@ public class Order implements SuperEntity {
     private Customer customer;
     @Setter(AccessLevel.NONE)
     @OneToMany(mappedBy = "order", cascade = {CascadeType.PERSIST})
-    private List<OrderDetail> orderDetails;
+    private List<OrderDetail> orderDetails = new ArrayList<>();
 
     public Order(String id, Date date, Customer customer) {
         this.id = id;

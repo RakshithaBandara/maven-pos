@@ -9,8 +9,6 @@ import lk.ijse.dep.web.pos.entity.Student;
 import org.mapstruct.*;
 
 import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 @Mapper
@@ -44,38 +42,38 @@ public interface EntityDTOMapper {
     }
 
     @Address
-    default String getAddress(StudentDTO dto){
+    default String getAddress(StudentDTO dto) {
         return dto.getFirstAddress() + " " + dto.getLastAddress();
     }
 
     @Named("firstName")
-    default String getFirstName(Student student){
+    default String getFirstName(Student student) {
         return student.getStudentName().split(" ")[0];
     }
 
     @Named("lastName")
-    default String getLastName(Student student){
+    default String getLastName(Student student) {
         return student.getStudentName().split(" ")[1];
     }
 
     @Named("firstAddress")
-    default String getFirstAddress(Student student){
+    default String getFirstAddress(Student student) {
         return student.getStudentAddress().split(" ")[0];
     }
 
     @Named("lastAddress")
-    default String getLastAddress(Student student){
+    default String getLastAddress(Student student) {
         return student.getStudentAddress().split(" ")[1];
     }
 
     @Named("defaultContact")
-    default String getDefaultContact(Student s){
+    default String getDefaultContact(Student s) {
         return "077-1234567";
     }
 }
 
 @Qualifier
 @Target(ElementType.METHOD)
-@interface Address{
+@interface Address {
 
 }
