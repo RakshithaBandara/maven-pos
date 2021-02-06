@@ -1,7 +1,6 @@
 package lk.ijse.dep.web.pos.business.custom.impl;
 
 import lk.ijse.dep.web.pos.business.custom.OrderBO;
-import lk.ijse.dep.web.pos.business.util.DEPTransaction;
 import lk.ijse.dep.web.pos.business.util.OrderEntityDTOMapper;
 import lk.ijse.dep.web.pos.dao.custom.ItemDAO;
 import lk.ijse.dep.web.pos.dao.custom.OrderDAO;
@@ -10,18 +9,17 @@ import lk.ijse.dep.web.pos.entity.Item;
 import lk.ijse.dep.web.pos.entity.Order;
 import lk.ijse.dep.web.pos.entity.OrderDetail;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-
-@Component
+@Transactional
+@Service
 public class OrderBOImpl implements OrderBO {
 
     @Autowired
     private OrderDAO orderDAO;
     @Autowired
     private ItemDAO itemDAO;
-    private EntityManager em;
     @Autowired
     private OrderEntityDTOMapper mapper;
 
@@ -29,19 +27,6 @@ public class OrderBOImpl implements OrderBO {
 
     }
 
-    @Override
-    public EntityManager getEntityManager() {
-        return this.em;
-    }
-
-    @Override
-    public void setEntityManager(EntityManager em) {
-        this.em = em;
-        orderDAO.setEntityManager(em);
-        itemDAO.setEntityManager(em);
-    }
-
-    @DEPTransaction
     @Override
     public void placeOrder(OrderDTO orderDTO) throws Exception {
         Order order = mapper.getOrder(orderDTO);

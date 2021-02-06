@@ -1,14 +1,17 @@
 package lk.ijse.dep.web.pos.dao;
 
 import lk.ijse.dep.web.pos.entity.SuperEntity;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
 public abstract class CrudDAOImpl<T extends SuperEntity, PK extends Serializable> implements CrudDAO<T, PK> {
 
+    @PersistenceContext
     private EntityManager em;
     private Class<T> entityClassObj;
 
@@ -17,11 +20,7 @@ public abstract class CrudDAOImpl<T extends SuperEntity, PK extends Serializable
     }
 
     @Override
-    public void setEntityManager(EntityManager em) {
-        this.em = em;
-    }
-
-    protected EntityManager getEntityManager(){
+    public EntityManager getEntityManager(){
         return em;
     }
 

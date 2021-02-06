@@ -1,6 +1,6 @@
 package lk.ijse.dep.web.pos.listener;
 
-import lk.ijse.dep.web.pos.util.JPAUtil;
+import lk.ijse.dep.web.pos.AppInitializer;
 import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletContextEvent;
@@ -33,8 +33,6 @@ public class ContextListener implements ServletContextListener {
 
         Properties prop = new Properties();
         try {
-            logger.info("Session factory is being initialized");
-            sce.getServletContext().setAttribute("emf", JPAUtil.getEntityManagerFactory());
 
 //            Properties properties = System.getProperties();
 //            for (Object o : properties.keySet()) {
@@ -60,7 +58,6 @@ public class ContextListener implements ServletContextListener {
 
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
-        JPAUtil.getEntityManagerFactory().close();
-        logger.info("Session factory is being shut down");
+        AppInitializer.getContext().close();
     }
 }
