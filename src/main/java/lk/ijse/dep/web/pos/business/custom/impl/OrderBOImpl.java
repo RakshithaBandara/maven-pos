@@ -2,27 +2,30 @@ package lk.ijse.dep.web.pos.business.custom.impl;
 
 import lk.ijse.dep.web.pos.business.custom.OrderBO;
 import lk.ijse.dep.web.pos.business.util.OrderEntityDTOMapper;
-import lk.ijse.dep.web.pos.dao.DAOFactory;
-import lk.ijse.dep.web.pos.dao.DAOTypes;
 import lk.ijse.dep.web.pos.dao.custom.ItemDAO;
 import lk.ijse.dep.web.pos.dao.custom.OrderDAO;
 import lk.ijse.dep.web.pos.dto.OrderDTO;
 import lk.ijse.dep.web.pos.entity.Item;
 import lk.ijse.dep.web.pos.entity.Order;
 import lk.ijse.dep.web.pos.entity.OrderDetail;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
 
+@Component
 public class OrderBOImpl implements OrderBO {
 
+    @Autowired
     private OrderDAO orderDAO;
+    @Autowired
     private ItemDAO itemDAO;
     private EntityManager em;
-    private OrderEntityDTOMapper mapper = OrderEntityDTOMapper.instance;
+    @Autowired
+    private OrderEntityDTOMapper mapper;
 
     public OrderBOImpl() {
-        orderDAO = DAOFactory.getInstance().getDAO(DAOTypes.ORDER);
-        itemDAO = DAOFactory.getInstance().getDAO(DAOTypes.ITEM);
+
     }
 
     @Override

@@ -1,7 +1,6 @@
 package lk.ijse.dep.web.pos.api;
 
-import lk.ijse.dep.web.pos.business.BOFactory;
-import lk.ijse.dep.web.pos.business.BOTypes;
+import lk.ijse.dep.web.pos.AppInitializer;
 import lk.ijse.dep.web.pos.business.custom.OrderBO;
 import lk.ijse.dep.web.pos.dto.OrderDTO;
 import lk.ijse.dep.web.pos.exception.HttpResponseException;
@@ -44,7 +43,7 @@ public class OrderServlet extends HttpServlet {
                 throw new HttpResponseException(400, "Invalid order details", null);
             }
 
-            OrderBO orderBO = BOFactory.getInstance().getBO(BOTypes.ORDER);
+            OrderBO orderBO = AppInitializer.getContext().getBean(OrderBO.class);
             orderBO.setEntityManager(em);
             orderBO.placeOrder(dto);
             resp.setStatus(HttpServletResponse.SC_CREATED);

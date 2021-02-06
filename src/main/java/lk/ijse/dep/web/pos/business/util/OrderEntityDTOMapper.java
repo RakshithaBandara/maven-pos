@@ -1,7 +1,7 @@
 package lk.ijse.dep.web.pos.business.util;
 
-import lk.ijse.dep.web.pos.dao.DAOFactory;
-import lk.ijse.dep.web.pos.dao.DAOTypes;
+import lk.ijse.dep.web.pos.AppInitializer;
+import lk.ijse.dep.web.pos.business.custom.CustomerBO;
 import lk.ijse.dep.web.pos.dao.custom.CustomerDAO;
 import lk.ijse.dep.web.pos.dto.OrderDTO;
 import lk.ijse.dep.web.pos.dto.OrderDetailDTO;
@@ -18,10 +18,8 @@ import org.mapstruct.factory.Mappers;
 import javax.persistence.EntityManager;
 import java.sql.Date;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface OrderEntityDTOMapper {
-
-    OrderEntityDTOMapper instance = Mappers.getMapper(OrderEntityDTOMapper.class);
 
     @Mapping(source = "orderId", target = "id")
     @Mapping(source = ".", target = "date")
@@ -35,7 +33,7 @@ public interface OrderEntityDTOMapper {
     default Customer getCustomer(OrderDTO dto){
         EntityManager em = JPAUtil.getEntityManagerFactory().createEntityManager();
         try{
-            CustomerDAO dao = DAOFactory.getInstance().getDAO(DAOTypes.CUSTOMER);
+            CustomerDAO dao = AppInitializer.getContext().getBean(CustomerDAO.class);
             dao.setEntityManager(em);
             return dao.get(dto.getCustomerId());
         } catch (Exception e) {

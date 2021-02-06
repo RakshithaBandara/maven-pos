@@ -1,13 +1,10 @@
 package lk.ijse.dep.web.pos.api;
 
-import lk.ijse.dep.web.pos.business.BOFactory;
-import lk.ijse.dep.web.pos.business.BOTypes;
+import lk.ijse.dep.web.pos.AppInitializer;
 import lk.ijse.dep.web.pos.business.custom.CustomerBO;
 import lk.ijse.dep.web.pos.dto.CustomerDTO;
 import lk.ijse.dep.web.pos.exception.HttpResponseException;
 import lk.ijse.dep.web.pos.exception.ResponseExceptionUtil;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -51,7 +48,7 @@ public class CustomerServlet extends HttpServlet {
 
             String id = req.getPathInfo().replace("/", "");
 
-            CustomerBO customerBO = BOFactory.getInstance().getBO(BOTypes.CUSTOMER);
+            CustomerBO customerBO = AppInitializer.getContext().getBean(CustomerBO.class);
             customerBO.setEntityManager(em);
             customerBO.deleteCustomer(id);
             resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
@@ -83,8 +80,9 @@ public class CustomerServlet extends HttpServlet {
                 throw new HttpResponseException(400, "Invalid details", null);
             }
 
-            CustomerBO customerBO = BOFactory.getInstance().getBO(BOTypes.CUSTOMER);
+            CustomerBO customerBO = AppInitializer.getContext().getBean(CustomerBO.class);
             customerBO.setEntityManager(em);
+            dto.setId(id);
             customerBO.updateCustomer(dto);
             resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
 
@@ -106,7 +104,7 @@ public class CustomerServlet extends HttpServlet {
 
         try{
             resp.setContentType("application/json");
-            CustomerBO customerBO = BOFactory.getInstance().getBO(BOTypes.CUSTOMER);
+            CustomerBO customerBO = AppInitializer.getContext().getBean(CustomerBO.class);
             customerBO.setEntityManager(em);
             resp.getWriter().println(jsonb.toJson(customerBO.findAllCustomers()));
 
@@ -130,7 +128,7 @@ public class CustomerServlet extends HttpServlet {
                 throw new HttpResponseException(400, "Invalid customer details", null);
             }
 
-            CustomerBO customerBO = BOFactory.getInstance().getBO(BOTypes.CUSTOMER);
+            CustomerBO customerBO = AppInitializer.getContext().getBean(CustomerBO.class);
             customerBO.setEntityManager(em);
             customerBO.saveCustomer(dto);
             resp.setStatus(HttpServletResponse.SC_CREATED);

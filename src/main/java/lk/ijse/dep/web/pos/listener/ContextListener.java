@@ -25,6 +25,12 @@ public class ContextListener implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent sce) {
 
+        try {
+            Class.forName("lk.ijse.dep.web.pos.AppInitializer");
+        } catch (ClassNotFoundException e) {
+            logger.info("Failed to create the IOC container", e);
+        }
+
         Properties prop = new Properties();
         try {
             logger.info("Session factory is being initialized");

@@ -1,13 +1,10 @@
 package lk.ijse.dep.web.pos.api;
 
-import lk.ijse.dep.web.pos.business.BOFactory;
-import lk.ijse.dep.web.pos.business.BOTypes;
+import lk.ijse.dep.web.pos.AppInitializer;
 import lk.ijse.dep.web.pos.business.custom.ItemBO;
 import lk.ijse.dep.web.pos.dto.ItemDTO;
 import lk.ijse.dep.web.pos.exception.HttpResponseException;
 import lk.ijse.dep.web.pos.exception.ResponseExceptionUtil;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 
 import javax.json.bind.Jsonb;
 import javax.json.bind.JsonbBuilder;
@@ -46,7 +43,7 @@ public class ItemServlet extends HttpServlet {
 
             String code = req.getPathInfo().replace("/", "");
 
-            ItemBO itemBO = BOFactory.getInstance().getBO(BOTypes.ITEM);
+            ItemBO itemBO = AppInitializer.getContext().getBean(ItemBO.class);
             itemBO.setEntityManager(em);
             itemBO.deleteItem(code);
             resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
@@ -77,8 +74,9 @@ public class ItemServlet extends HttpServlet {
                 throw new HttpResponseException(400, "Invalid details", null);
             }
 
-            ItemBO itemBO = BOFactory.getInstance().getBO(BOTypes.ITEM);
+            ItemBO itemBO = AppInitializer.getContext().getBean(ItemBO.class);
             itemBO.setEntityManager(em);
+            dto.setCode(code);
             itemBO.updateItem(dto);
             resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
 
@@ -98,7 +96,7 @@ public class ItemServlet extends HttpServlet {
         EntityManager em = emf.createEntityManager();
         try {
             resp.setContentType("application/json");
-            ItemBO itemBO = BOFactory.getInstance().getBO(BOTypes.ITEM);
+            ItemBO itemBO = AppInitializer.getContext().getBean(ItemBO.class);
             itemBO.setEntityManager(em);
             resp.getWriter().println(jsonb.toJson(itemBO.findAllItems()));
 
@@ -121,7 +119,7 @@ public class ItemServlet extends HttpServlet {
                 throw new HttpResponseException(400, "Invalid item details", null);
             }
 
-            ItemBO itemBO = BOFactory.getInstance().getBO(BOTypes.ITEM);
+            ItemBO itemBO = AppInitializer.getContext().getBean(ItemBO.class);
             itemBO.setEntityManager(em);
             itemBO.saveItem(dto);
             resp.setStatus(HttpServletResponse.SC_CREATED);
