@@ -4,6 +4,7 @@ import lk.ijse.dep.web.pos.business.SuperBO;
 import lk.ijse.dep.web.pos.dto.CustomerDTO;
 import lk.ijse.dep.web.pos.entity.Customer;
 
+import javax.persistence.EntityManager;
 import java.util.List;
 
 public interface CustomerBO extends SuperBO {

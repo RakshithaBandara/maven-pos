@@ -1,6 +1,7 @@
 package lk.ijse.dep.web.pos.business.custom.impl;
 
 import lk.ijse.dep.web.pos.business.custom.ItemBO;
+import lk.ijse.dep.web.pos.business.util.DEPTransaction;
 import lk.ijse.dep.web.pos.business.util.EntityDTOMapper;
 import lk.ijse.dep.web.pos.dao.custom.ItemDAO;
 import lk.ijse.dep.web.pos.dto.ItemDTO;
@@ -24,57 +25,37 @@ public class ItemBOImpl implements ItemBO {
     }
 
     @Override
+    public EntityManager getEntityManager() {
+        return this.em;
+    }
+
+    @Override
     public void setEntityManager(EntityManager em) {
         this.em = em;
         itemDAO.setEntityManager(em);
     }
 
+    @DEPTransaction
     @Override
     public void saveItem(ItemDTO itemDTO) throws Exception {
-        try {
-            em.getTransaction().begin();
-            itemDAO.save(mapper.getItem(itemDTO));
-            em.getTransaction().commit();
-        }catch (Throwable t){
-            em.getTransaction().rollback();
-            throw t;
-        }
+        itemDAO.save(mapper.getItem(itemDTO));
     }
 
+    @DEPTransaction
     @Override
     public void updateItem(ItemDTO itemDTO) throws Exception {
-        try {
-            em.getTransaction().begin();
-            itemDAO.update(mapper.getItem(itemDTO));
-            em.getTransaction().commit();
-        }catch (Throwable t){
-            em.getTransaction().rollback();
-            throw t;
-        }
+        itemDAO.update(mapper.getItem(itemDTO));
     }
 
+    @DEPTransaction
     @Override
     public void deleteItem(String itemCode) throws Exception {
-        try {
-            em.getTransaction().begin();
-            itemDAO.delete(itemCode);
-            em.getTransaction().commit();
-        }catch (Throwable t){
-            em.getTransaction().rollback();
-            throw t;
-        }
+        itemDAO.delete(itemCode);
     }
 
+    @DEPTransaction
     @Override
     public List<ItemDTO> findAllItems() throws Exception {
-        try {
-            em.getTransaction().begin();
-            List<Item> items = itemDAO.getAll();
-            em.getTransaction().commit();
-            return mapper.getItemDTOs(items);
-        }catch (Throwable t){
-            em.getTransaction().rollback();
-            throw t;
-        }
+        return mapper.getItemDTOs(itemDAO.getAll());
     }
 }

@@ -1,6 +1,7 @@
 package lk.ijse.dep.web.pos.business.custom.impl;
 
 import lk.ijse.dep.web.pos.business.custom.CustomerBO;
+import lk.ijse.dep.web.pos.business.util.DEPTransaction;
 import lk.ijse.dep.web.pos.business.util.EntityDTOMapper;
 import lk.ijse.dep.web.pos.dao.custom.CustomerDAO;
 import lk.ijse.dep.web.pos.dto.CustomerDTO;
@@ -30,51 +31,31 @@ public class CustomerBOImpl implements CustomerBO {
     }
 
     @Override
-    public void saveCustomer(CustomerDTO dto) throws Exception {
-        try {
-            em.getTransaction().begin();
-            customerDAO.save(mapper.getCustomer(dto));
-            em.getTransaction().commit();
-        } catch (Throwable t) {
-            em.getTransaction().rollback();
-            throw t;
-        }
+    public EntityManager getEntityManager() {
+        return this.em;
     }
 
+    @DEPTransaction
+    @Override
+    public void saveCustomer(CustomerDTO dto) throws Exception {
+        customerDAO.save(mapper.getCustomer(dto));
+    }
+
+    @DEPTransaction
     @Override
     public void updateCustomer(CustomerDTO dto) throws Exception {
-        try {
-            em.getTransaction().begin();
-            customerDAO.update(mapper.getCustomer(dto));
-            em.getTransaction().commit();
-        } catch (Throwable t) {
-            em.getTransaction().rollback();
-            throw t;
-        }
+        customerDAO.update(mapper.getCustomer(dto));
     }
 
+    @DEPTransaction
     @Override
     public void deleteCustomer(String customerId) throws Exception {
-        try {
-            em.getTransaction().begin();
-            customerDAO.delete(customerId);
-            em.getTransaction().commit();
-        } catch (Throwable t) {
-            em.getTransaction().rollback();
-            throw t;
-        }
+        customerDAO.delete(customerId);
     }
 
+    @DEPTransaction
     @Override
     public List<CustomerDTO> findAllCustomers() throws Exception {
-        try {
-            em.getTransaction().begin();
-            List<CustomerDTO> customerDTOs = mapper.getCustomerDTOs(customerDAO.getAll());
-            em.getTransaction().commit();
-            return customerDTOs;
-        } catch (Throwable t) {
-            em.getTransaction().rollback();
-            throw t;
-        }
+        return mapper.getCustomerDTOs(customerDAO.getAll());
     }
 }
