@@ -1,7 +1,6 @@
 package lk.ijse.dep.web.pos.business.util;
 
-import lk.ijse.dep.web.pos.WebAppInitializer;
-import lk.ijse.dep.web.pos.dao.custom.CustomerDAO;
+import lk.ijse.dep.web.pos.dao.CustomerDAO;
 import lk.ijse.dep.web.pos.dto.OrderDTO;
 import lk.ijse.dep.web.pos.dto.OrderDetailDTO;
 import lk.ijse.dep.web.pos.entity.Customer;
@@ -31,7 +30,7 @@ public abstract class OrderEntityDTOMapper {
     }
 
     public Customer getCustomer(OrderDTO dto) throws Exception{
-        return customerDAO.get(dto.getCustomerId());
+        return customerDAO.getOne(dto.getCustomerId());
     }
 
     @Mapping(source = ".", target = "orderDetailPK", qualifiedByName = "pk")

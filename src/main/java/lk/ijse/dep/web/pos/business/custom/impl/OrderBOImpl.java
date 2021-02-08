@@ -2,8 +2,8 @@ package lk.ijse.dep.web.pos.business.custom.impl;
 
 import lk.ijse.dep.web.pos.business.custom.OrderBO;
 import lk.ijse.dep.web.pos.business.util.OrderEntityDTOMapper;
-import lk.ijse.dep.web.pos.dao.custom.ItemDAO;
-import lk.ijse.dep.web.pos.dao.custom.OrderDAO;
+import lk.ijse.dep.web.pos.dao.ItemDAO;
+import lk.ijse.dep.web.pos.dao.OrderDAO;
 import lk.ijse.dep.web.pos.dto.OrderDTO;
 import lk.ijse.dep.web.pos.entity.Item;
 import lk.ijse.dep.web.pos.entity.Order;
@@ -32,12 +32,12 @@ public class OrderBOImpl implements OrderBO {
         Order order = mapper.getOrder(orderDTO);
         orderDAO.save(order);
         for (OrderDetail orderDetail : order.getOrderDetails()) {
-            Item item = itemDAO.get(orderDetail.getOrderDetailPK().getItemCode());
+            Item item = itemDAO.findById(orderDetail.getOrderDetailPK().getItemCode()).get();
             item.setQtyOnHand(item.getQtyOnHand() - orderDetail.getQty());
             if (item.getQtyOnHand() < 0) {
                 throw new RuntimeException("Invalid Qty.");
             }
-            itemDAO.update(item);
+            itemDAO.save(item);
         }
     }
 }
