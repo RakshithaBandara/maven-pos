@@ -9,8 +9,11 @@ import lk.ijse.dep.web.pos.entity.Item;
 import lk.ijse.dep.web.pos.entity.Order;
 import lk.ijse.dep.web.pos.entity.OrderDetail;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.sql.Date;
 
 @Transactional
 @Service

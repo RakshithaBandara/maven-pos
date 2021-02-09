@@ -4,13 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+@NamedQuery(name = "Item.immediateStock", query = "SELECT i FROM Item i WHERE i.qtyOnHand <= 5")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

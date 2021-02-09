@@ -6,6 +6,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+@ToString(exclude = {"order", "item"})
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

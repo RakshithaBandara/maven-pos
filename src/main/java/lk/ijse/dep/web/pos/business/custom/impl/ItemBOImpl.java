@@ -40,7 +40,6 @@ public class ItemBOImpl implements ItemBO {
     @Transactional(readOnly = true)
     @Override
     public List<ItemDTO> findAllItems() throws Exception {
-        itemDAO.queryItemByQtyOnHandGreaterThanEqual(5).forEach(System.out::println);
         return mapper.getItemDTOs(itemDAO.findAll());
     }
 }

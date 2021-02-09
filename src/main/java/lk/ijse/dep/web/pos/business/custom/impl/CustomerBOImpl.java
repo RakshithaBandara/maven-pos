@@ -45,10 +45,6 @@ public class CustomerBOImpl implements CustomerBO {
     @Transactional(readOnly = true)
     @Override
     public List<CustomerDTO> findAllCustomers() throws Exception {
-        customerDAO.temp().forEach(System.out::println);
-//        orderDAO.findCustomerNamesByOrderDate(Date.valueOf("2021-01-13")).forEach(System.out::println);
-//        System.out.println(customerDAO.findCustomerNames("Kadawatha", "U"));
-//        customerDAO.readCustomerByNameLike("S%").forEach(System.out::println);
         return mapper.getCustomerDTOs(customerDAO.findAll());
     }
 }
