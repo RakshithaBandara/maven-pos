@@ -13,4 +13,6 @@ public interface CustomerDAO extends JpaRepository<Customer, String> {
 
     @Query(value = "SELECT c.name FROM Customer c WHERE c.address = ?1 AND c.name LIKE CONCAT(?2,'%')")
     List<String> findCustomerNames(String address, String name);
+
+    List<Customer> temp();
 }

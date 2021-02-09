@@ -3,11 +3,13 @@ package lk.ijse.dep.web.pos.business.custom.impl;
 import lk.ijse.dep.web.pos.business.custom.CustomerBO;
 import lk.ijse.dep.web.pos.business.util.EntityDTOMapper;
 import lk.ijse.dep.web.pos.dao.CustomerDAO;
+import lk.ijse.dep.web.pos.dao.OrderDAO;
 import lk.ijse.dep.web.pos.dto.CustomerDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Date;
 import java.util.List;
 
 @Transactional
@@ -16,6 +18,8 @@ public class CustomerBOImpl implements CustomerBO {
 
     @Autowired
     private CustomerDAO customerDAO;
+    @Autowired
+    private OrderDAO orderDAO;
     @Autowired
     private EntityDTOMapper mapper;
 
@@ -41,7 +45,9 @@ public class CustomerBOImpl implements CustomerBO {
     @Transactional(readOnly = true)
     @Override
     public List<CustomerDTO> findAllCustomers() throws Exception {
-        System.out.println(customerDAO.findCustomerNames("Kadawatha", "U"));
+        customerDAO.temp().forEach(System.out::println);
+//        orderDAO.findCustomerNamesByOrderDate(Date.valueOf("2021-01-13")).forEach(System.out::println);
+//        System.out.println(customerDAO.findCustomerNames("Kadawatha", "U"));
 //        customerDAO.readCustomerByNameLike("S%").forEach(System.out::println);
         return mapper.getCustomerDTOs(customerDAO.findAll());
     }

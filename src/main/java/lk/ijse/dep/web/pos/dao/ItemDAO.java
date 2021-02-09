@@ -8,4 +8,5 @@ import java.util.List;
 public interface ItemDAO extends JpaRepository<Item, String> {
 
     List<Item> queryItemByQtyOnHandGreaterThanEqual(int qty);
+
 }
